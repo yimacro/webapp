@@ -9,12 +9,9 @@ var remoteStream;
 var turnReady;
 var host;
 
-var pcConfig = {
-  'iceServers': [{
-    'urls': 'stun:stun.l.google.com:19302'
-  }]
-};
-
+var ICE_SERVERS = [
+    {url:"stun:stun.l.google.com:19302"}
+];
 // Set up audio and video regardless of what devices are present.
 var sdpConstraints = {
   offerToReceiveAudio: true,
@@ -65,7 +62,6 @@ socket.on('hostID', function(hostID) {
   host = hostID;
 });
 
-////////////////////////////////////////////////
 
 function sendMessage(message) {
   console.log('Client sending message: ', message);
@@ -96,7 +92,6 @@ socket.on('message', function(message) {
   }
 });
 
-////////////////////////////////////////////////////
 
 
 var remoteVideo = document.querySelector('#remoteVideo');
@@ -112,11 +107,7 @@ var constraints = {
 
 console.log('Getting user media with constraints', constraints);
 
-if (location.hostname !== 'localhost') {
-  requestTurn(
-    'https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913'
-  );
-}
+
 
 function maybeStart() {
   console.log('>>>>>>> maybeStart() ', isStarted, localStream, isChannelReady);
@@ -136,11 +127,10 @@ window.onbeforeunload = function() {
   sendMessage('bye');
 };
 
-/////////////////////////////////////////////////////////
 
 function createPeerConnection() {
   try {
-    pc = new RTCPeerConnection(null);
+    pc = new RTCPeerConnection({"iceServers": ICE_SERVERS});
     pc.onicecandidate = handleIceCandidate;
     pc.onaddstream = handleRemoteStreamAdded;
     pc.onremovestream = handleRemoteStreamRemoved;
@@ -193,34 +183,6 @@ function onCreateSessionDescriptionError(error) {
   trace('Failed to create session description: ' + error.toString());
 }
 
-function requestTurn(turnURL) {
-  var turnExists = false;
-  for (var i in pcConfig.iceServers) {
-    if (pcConfig.iceServers[i].urls.substr(0, 5) === 'turn:') {
-      turnExists = true;
-      turnReady = true;
-      break;
-    }
-  }
-  if (!turnExists) {
-    console.log('Getting TURN server from ', turnURL);
-    // No TURN server. Get one from computeengineondemand.appspot.com:
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var turnServer = JSON.parse(xhr.responseText);
-        console.log('Got TURN server: ', turnServer);
-        pcConfig.iceServers.push({
-          'urls': 'turn:' + turnServer.username + '@' + turnServer.turn,
-          'credential': turnServer.password
-        });
-        turnReady = true;
-      }
-    };
-    xhr.open('GET', turnURL, true);
-    xhr.send();
-  }
-}
 
 function handleRemoteStreamAdded(event) {
   console.log('Remote stream added.');
