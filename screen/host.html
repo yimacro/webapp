@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+
+  <title>屏幕分享</title>
+
+  <link rel="stylesheet" href="css/main.css" />
+
+</head>
+
+<body>
+  <script>
+    var url = window.location.href;
+    var pos = url.indexOf("?");
+    var room = url.substr(pos+1);
+    alert("屏幕分享链接： https://yimacro.club/screen/index.html?"+room);
+  </script>
+
+
+  <div id="videos">
+    <video id="localVideo" autoplay></video>
+    <video id="remoteVideo" autoplay></video>
+    
+  </div>
+
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/adapter-latest.js"></script>
+  <script src="js/host.js"></script>
+
+</body>
+
+</html>
