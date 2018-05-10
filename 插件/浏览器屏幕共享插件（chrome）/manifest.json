@@ -1,0 +1,16 @@
+{
+  "name": "Screen Share",
+  "description":
+    "An extension to allow you to share your screen.",
+  "version": "0.1.0",
+  "key" : "jnfjgeohibinlgeomppgbifnpgmicgma",
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["extension.js"],
+    "persistent": false
+  },
+  "externally_connectable": {
+    "matches": ["https://yimacro.club/*"]
+  },
+  "permissions": ["desktopCapture"]
+}

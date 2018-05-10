@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <script src="js/jquery.min.js"></script>
+        <!-- This adapter.js file de-prefixes the webkit* and moz* prefixed RTC
+             methods. When RTC becomes a more solid standard, this adapter should no
+             longer be necessary. -->
+        <!-- <script src="https://webrtc.googlecode.com/svn/trunk/samples/js/base/adapter.js"></script> -->
+        <link rel="stylesheet" href="/css/main.css" />
+
+        
+        <script src="js/bootstrap.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="js/adapter-latest.js"></script>
+        
+    </head>
+    <body>
+        <section class="banner style1 orient-left content-align-left image-position-right fullscreen onload-image-fade-in onload-content-fade-right">
+            <div class="content" onkeydown="KeyLogin();">
+                <div class="box" id="received">
+                    <header>
+                    <h2>会议概要</h2>
+                    </header>                           
+                    <!--<ul>
+                        <li>市场需求分析</li>
+                        <li>产品模型设计</li>
+                        <li>产品制作流程</li>
+                        <li>产品测试与顾客反馈</li>
+                        <li>产品改进</li>
+                        <li>维护</li>
+                    </ul> !-->
+                </div>
+                <ul class="actions vertical">
+                    <li><input type="text" name="message" id="message" value="" /></li>
+                    <li><button id="send" class="button">send</button></li>
+                    <script>
+                    function KeyLogin(){
+                        if(event.keyCode == 13)
+                            document.querySelector('#send').click();
+                    }
+                    </script>
+                </ul>   
+                       
+
+                
+                <ul class="icons">
+                    
+                    <script>
+                        var url = window.location.href;
+                        var pos = url.indexOf("?");
+                        var roomnumber = url.substr(pos+1);
+                        document.write("<li><a href='https://yimacro.club/screen/host.html?"+roomnumber+"' target='_blank' class='icon style2 major fa-desktop'><span class='label'>Screen</span></a></li>");
+
+                    </script>
+                    
+                    <li><a href="https://github.com/muaz-khan/Chrome-Extensions/tree/master/file-sharing" class="icon style2 major fa-paper-plane" target="_blank"><span class="label">File</span></a></li>
+                </ul>
+                
+                
+
+                
+            
+
+            </div>
+            <div class="image"> 
+
+            </div>
+        </section>
+        
+        
+       
+        <!-- 
+        the <video> and <audio> tags are all added and removed dynamically
+        in 'onAddStream', 'setup_local_media', and 'removePeer'/'disconnect'
+        -->
+        <script src="js/main.js"></script>
+    </body>
+</html>
